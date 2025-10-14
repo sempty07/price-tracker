@@ -2,9 +2,8 @@ name: Check product prices
 
 on:
   schedule:
-    # Uruchamiaj codziennie o 8:00 i 20:00
-    - cron: "0 8,20 * * *"
-  workflow_dispatch: # pozwala uruchomić ręcznie
+    - cron: "0 8,20 * * *"  # codziennie o 8:00 i 20:00
+  workflow_dispatch: # ręczne uruchamianie
 
 jobs:
   check_prices:
@@ -32,6 +31,7 @@ jobs:
           import requests
           from pathlib import Path
           from bs4 import BeautifulSoup
+          import os
 
           DATA_FILE = Path("data/produkty.json")
 
@@ -52,12 +52,27 @@ jobs:
                   r.raise_for_status()
                   soup = BeautifulSoup(r.text, "html.parser")
 
-                  # Przykładowy parser ceny — dostosuj do sklepu
-                  price_tag = soup.select_one(".price")  # klasa CSS ceny
-                  if price_tag:
-                      new_price = float(price_tag.get_text(strip=True).replace(",", ".").replace("zł","").strip())
-                  else:
+                  # Lista przykładowych selektorów dla ceny
+                  price_selectors = [
+                      ".price",            # typowa klasa dla ceny
+                      ".product-price",    # inny e-sklep
+                      "#priceblock_ourprice" # Amazon
+                  ]
+
+                  new_price = None
+                  for sel in price_selectors:
+                      tag = soup.select_one(sel)
+                      if tag:
+                          try:
+                              new_price = float(tag.get_text(strip=True).replace(",", ".").replace("zł","").strip())
+                              break
+                          except:
+                              continue
+
+                  if new_price is None:
+                      print(f"Nie udało się znaleźć ceny dla {url}")
                       new_price = old_price
+
               except Exception as e:
                   print(f"Błąd pobierania ceny dla {url}: {e}")
                   new_price = old_price
