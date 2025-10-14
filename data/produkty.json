@@ -19,5 +19,12 @@
     "name": "Sukienka w kwiaty Newbie Woman",
     "price": 549.99,
     "last_updated": "2025-10-14T21:18:06.698Z"
+  },
+  {
+    "id": 4,
+    "url": "https://www.coingecko.com/pl/waluty/ethereum",
+    "name": "Ethereum\nKurs ETH",
+    "price": 0,
+    "last_updated": "2025-10-14T21:19:23.750Z"
   }
 ]
