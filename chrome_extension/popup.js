@@ -1,41 +1,66 @@
-const TOKEN = "TWÓJ_PERSONAL_ACCESS_TOKEN"; // trzeba utworzyć na GitHub
-const REPO = "TWOJE_UZYTKOWNIK/price-tracker";
-const FILE_PATH = "data/produkty.json";
+// Pobranie tokena z chrome.storage
+chrome.storage.local.get(["githubToken"], async function(result) {
+    const TOKEN = result.githubToken;
+    if (!TOKEN) {
+        alert("Nie ustawiono tokena w Opcjach rozszerzenia!");
+        return;
+    }
 
-document.getElementById("addProduct").addEventListener("click", async () => {
-  const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
-  const url = tab.url;
+    const REPO = "TWOJE_UZYTKOWNIK/price-tracker"; // zmień na swoje repo
+    const FILE_PATH = "data/produkty.json";
 
-  // Poniżej przykład pobrania danych ze strony - dopasuj do konkretnego sklepu
-  const id = Date.now(); // tymczasowe ID
-  const name = document.title;
-  const price = 0; // tu można dodać parser strony
-  const date = new Date().toISOString();
+    document.getElementById("addProduct").addEventListener("click", async () => {
+        // Pobranie aktywnej zakładki
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const url = tab.url;
 
-  // Pobranie istniejącego pliku JSON z repo
-  const getResponse = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
-    headers: { Authorization: `token ${TOKEN}` }
-  });
-  const data = await getResponse.json();
-  const content = atob(data.content);
-  const json = JSON.parse(content);
+        // Tymczasowe ID i pobranie danych z tytułu strony
+        const id = Date.now();
+        const name = document.title;
+        const price = 0; // później można dodać parser strony
+        const date = new Date().toISOString();
 
-  // Dodanie nowego produktu
-  json.push({ id, url, nazwa: name, cena: price, ostatnia_aktualizacja: date });
+        try {
+            // Pobranie istniejącego pliku JSON z repo
+            const getResponse = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+                headers: { Authorization: `token ${TOKEN}` }
+            });
 
-  // Zapis z powrotem na GitHub
-  await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
-    method: "PUT",
-    headers: {
-      "Authorization": `token ${TOKEN}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: "Dodano produkt z rozszerzenia",
-      content: btoa(JSON.stringify(json, null, 2)),
-      sha: data.sha
-    })
-  });
+            if (!getResponse.ok) {
+                alert("Błąd pobierania pliku JSON z repo: " + getResponse.status);
+                return;
+            }
 
-  alert("Produkt dodany!");
+            const data = await getResponse.json();
+            const content = atob(data.content);
+            const json = JSON.parse(content);
+
+            // Dodanie nowego produktu
+            json.push({ id, url, nazwa: name, cena: price, ostatnia_aktualizacja: date });
+
+            // Zapis z powrotem na GitHub
+            const putResponse = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: "Dodano produkt z rozszerzenia",
+                    content: btoa(JSON.stringify(json, null, 2)),
+                    sha: data.sha
+                })
+            });
+
+            if (!putResponse.ok) {
+                alert("Błąd zapisu pliku na GitHub: " + putResponse.status);
+                return;
+            }
+
+            alert("✅ Produkt dodany!");
+        } catch (err) {
+            console.error(err);
+            alert("Wystąpił błąd: " + err.message);
+        }
+    });
 });
