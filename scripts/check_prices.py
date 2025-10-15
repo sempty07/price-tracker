@@ -81,7 +81,9 @@ def check_prices():
 
     for p in products:
         print(f"🔍 Sprawdzam: {p['name']}")
-
+    for p in products:
+        p["price"] = 0
+        
         new_price = get_price_from_page(p["url"])
         if new_price is None:
             print(f"⚠️ Nie udało się pobrać ceny dla {p['url']}")
