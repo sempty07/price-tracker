@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Price Tracker</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+
+  /* Floating modal */
+  #modal {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    width: 320px;
+    background: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+    cursor: move;
+  }
+
+  #modal-header {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    user-select: none;
+  }
+
+  #close-btn { cursor: pointer; font-weight: bold; }
+
+  #modal-body { padding: 10px; }
+
+  label { display: block; margin-top: 8px; font-weight: bold; color: #555; }
+
+  input[type="text"] {
+    width: 100%; padding: 6px; margin-top: 3px;
+    border: 1px solid #ccc; border-radius: 4px; font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  button {
+    width: 100%; padding: 10px; margin-top: 8px;
+    font-size: 14px; cursor: pointer; border: none; border-radius: 5px;
+    color: white; background-color: #007bff; transition: background-color 0.2s;
+  }
+
+  button:hover { background-color: #0056b3; }
+  button:disabled { background-color: #6c757d; cursor: default; }
+
+  #status {
+    margin-top: 8px; padding: 6px; font-size: 13px; border-radius: 4px;
+    min-height: 20px;
+  }
+
+  .ok { color: green; background-color: #e6ffed; border: 1px solid #b7eb8f; }
+  .error { color: red; background-color: #ffe6e6; border: 1px solid #ff8c8c; }
+</style>
+</head>
+<body>
+
+<div id="modal">
+  <div id="modal-header">
+    Price Tracker
+    <span id="close-btn">×</span>
+  </div>
+  <div id="modal-body">
+    <label for="product-name">Nazwa produktu:</label>
+    <input type="text" id="product-name" placeholder="Np. Gogle VR PICO 3">
+
+    <label for="product-price">Cena:</label>
+    <input type="text" id="product-price" placeholder="Cena" readonly>
+
+    <label for="price-selector">Selektor CSS ceny:</label>
+    <input type="text" id="price-selector" placeholder="Np. .price, [data-price]">
+
+    <button id="refresh-price">🔄 Odśwież cenę</button>
+    <button id="add-product">💾 Dodaj produkt</button>
+
+    <div id="status"></div>
+  </div>
+</div>
+
+<script src="drag.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

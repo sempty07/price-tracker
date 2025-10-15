@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<title>Price Tracker — Opcje</title>
+<style>
+  body { font-family: Arial; padding: 12px; min-width: 320px; }
+  label { display:block; margin-top:8px; font-weight:600; }
+  input { width:100%; padding:8px; margin-top:6px; box-sizing:border-box; }
+  button { margin-top:10px; padding:8px 12px; }
+  .hint { font-size:12px; color:#555; margin-top:6px; }
+</style>
+</head>
+<body>
+  <h3>Ustawienia Price Tracker</h3>
+  <label>GitHub token (z uprawnieniem repo):</label>
+  <input type="password" id="token" placeholder="wklej token tutaj" />
+  <button id="save">Zapisz token</button>
+  <div class="hint">Token będzie zapisany w <code>chrome.storage.sync</code>.</div>
+
+  <script>
+    const input = document.getElementById('token');
+    const btn = document.getElementById('save');
+
+    // załaduj istniejący token
+    chrome.storage.sync.get(['githubToken'], (res) => {
+      if (res.githubToken) input.value = res.githubToken;
+    });
+
+    btn.addEventListener('click', () => {
+      const token = input.value.trim();
+      chrome.storage.sync.set({ githubToken: token }, () => {
+        alert('Token zapisany.');
+      });
+    });
+  </script>
+</body>
+</html>
