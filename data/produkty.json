@@ -14,5 +14,13 @@
     "price": "1799",
     "selector": "#section_offer-available > div.price-box > div.prices-section > div > div > span.whole",
     "last_updated": "2025-10-15T20:03:32.275Z"
-  }
+  },
+  {
+  "id": 999,
+  "url": "https://example.com",
+  "name": "Testowy produkt",
+  "price": 1.0,
+  "last_updated": "2025-10-15T00:00:00",
+  "selector": "body"
+}
 ]
