@@ -6,5 +6,13 @@
     "price": "549.99",
     "selector": "",
     "last_updated": "2025-10-15T20:03:05.035Z"
+  },
+  {
+    "id": 2,
+    "url": "https://www.mediaexpert.pl/gaming/okulary-vr/gogle-vr-oculus-meta-quest-3s-256-gb",
+    "name": "Gogle VR OCULUS Meta Quest 3S 256GB",
+    "price": "1799",
+    "selector": "#section_offer-available > div.price-box > div.prices-section > div > div > span.whole",
+    "last_updated": "2025-10-15T20:03:32.275Z"
   }
 ]
