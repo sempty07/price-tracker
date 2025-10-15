@@ -25,9 +25,17 @@
   {
     "id": 4,
     "url": "https://www.douglas.pl/pl/p/5002312015",
-    "name": "PIXI PŁATKI POD OCZYBEAUTIFEYE",
+    "name": "PIXI PÅATKI POD OCZYBEAUTIFEYE",
     "price": "124.00992030952",
     "selector": "#app > main > div.product-detail-page > div > div.n.ce844a9e83f9d8b76da5 > div.c33d8418a78742e3ee50.o.f.E > div.n.product-cockpit > div.product-cockpit__variant.o > div > div > div.product-detail__variant-row.product-detail__variant-row--spread-content > div.product-price.text-right > div > div.discounted-price__row > div.f7d7ec62459b7a79504c > span > span",
     "last_updated": "2025-10-15T19:54:33.698Z"
+  },
+  {
+    "id": 5,
+    "url": "https://www.douglas.pl/pl/p/5002312015",
+    "name": "PIXI PŁATKI POD OCZYBEAUTIFEYE",
+    "price": "99.2",
+    "selector": "#app > main > div.product-detail-page > div > div.n.ce844a9e83f9d8b76da5 > div.c33d8418a78742e3ee50.o.f.E > div.n.product-cockpit > div.product-cockpit__variant.o > div > div > div.product-detail__variant-row.product-detail__variant-row--spread-content > div.product-price.text-right > div > div.discounted-price__row > div.f7d7ec62459b7a79504c > span > span",
+    "last_updated": "2025-10-15T19:54:36.515Z"
   }
 ]
