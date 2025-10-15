@@ -26,5 +26,12 @@
     "price": 4099,
     "url": "https://allegro.pl/oferta/smartfon-apple-iphone-16-pro-8-gb-128-gb-5g-czarny-17975837817",
     "last_updated": "2025-10-15T10:22:34.222Z"
+  },
+  {
+    "id": 5,
+    "name": "ksiazka",
+    "price": 30,
+    "url": "https://www.empik.com/wiatr-z-polnocy-miriam-georg,p1614457297,ksiazka-p",
+    "last_updated": "2025-10-15T10:23:03.866Z"
   }
 ]
