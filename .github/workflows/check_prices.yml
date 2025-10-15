@@ -2,31 +2,39 @@ name: Check product prices
 
 on:
   schedule:
-    - cron: "0 6,18 * * *"  # uruchamia się codziennie o 6:00 i 18:00 UTC
-  workflow_dispatch:         # pozwala uruchomić ręcznie z GitHuba
-
+    # 2 razy dziennie: 8:00 i 20:00 UTC (przykład)
+    - cron: '0 8,20 * * *'
+  workflow_dispatch:  # pozwala uruchomić ręcznie z GitHub
 jobs:
   check_prices:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write  # potrzebne do commit/push
     steps:
+      # 1️⃣ Pobranie repo
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
+      # 2️⃣ Ustawienie Pythona
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      # 3️⃣ Instalacja zależności
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          pip install --upgrade pip
+          pip install requests beautifulsoup4
 
+      # 4️⃣ Uruchomienie skryptu Python, który sprawdza ceny
       - name: Run price checker
+        run: python scripts/check_prices.py
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python scripts/check_prices.py
 
+      # 5️⃣ Commit i push aktualizacji pliku produkty.json
       - name: Commit and push updated prices
         run: |
           git config --global user.name "github-actions"
