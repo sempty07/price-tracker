@@ -32,7 +32,9 @@ def send_telegram_message(text):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {"chat_id": TELEGRAM_CHAT_ID, "text": text}
     try:
-        requests.post(url, data=data, timeout=10)
+        resp = requests.post(url, data=data, timeout=10)
+        print(f"📨 Wysyłam do Telegrama: {text}")
+        print(f"✅ Odpowiedź Telegrama: {resp.text}")
     except Exception as e:
         print("❌ Błąd wysyłania do Telegrama:", e)
 
@@ -79,11 +81,13 @@ def check_prices():
     products = load_data()
     print(f"📦 Znaleziono {len(products)} produktów do sprawdzenia.")
 
+    # 🧪 TESTOWA WIADOMOŚĆ DO TELEGRAMA
+    send_telegram_message("🧪 Test wiadomości: GitHub Actions działa i bot jest połączony.")
+    print("✅ Testowa wiadomość została wysłana do Telegrama.")
+
     for p in products:
         print(f"🔍 Sprawdzam: {p['name']}")
-    for p in products:
-        p["price"] = 0
-        
+
         new_price = get_price_from_page(p["url"])
         if new_price is None:
             print(f"⚠️ Nie udało się pobrać ceny dla {p['url']}")
