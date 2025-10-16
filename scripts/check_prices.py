@@ -56,7 +56,14 @@ def send_telegram_message(text):
 
 def get_price_from_page(url):
     """Pobiera aktualną cenę z podanego URL."""
-    headers = {"User-Agent": random.choice(USER_AGENTS)}
+    headers = {
+        "User-Agent": random.choice(USER_AGENTS),
+        "Accept-Language": "pl-PL,pl;q=0.9,en;q=0.8",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Referer": "https://www.google.com/",
+        "Connection": "keep-alive",
+    }
+
     try:
         r = requests.get(url, headers=headers, timeout=15)
         r.raise_for_status()
@@ -73,6 +80,8 @@ def get_price_from_page(url):
             "#price",
             ".cena",
             "meta[itemprop='price']",
+            "#zakup-zwykly > div > span:nth-child(3)",  # ← ten działał dla Zapato
+            ".product-info .price",                      # dodatkowy ogólny
         ]
 
         for sel in selectors:
@@ -91,6 +100,9 @@ def get_price_from_page(url):
                 except ValueError:
                     continue
 
+        # debug: podgląd fragmentu strony, jeśli nie znaleziono ceny
+        print(f"⚠️ Nie znaleziono ceny dla {url}, fragment HTML:")
+        print(r.text[:500])
         return None
 
     except requests.exceptions.HTTPError as e:
@@ -99,6 +111,7 @@ def get_price_from_page(url):
     except Exception as e:
         print(f"❌ Błąd pobierania {url}: {e}")
         return None
+
 
 
 def check_prices():
