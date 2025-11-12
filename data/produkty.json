@@ -5,7 +5,7 @@
     "name": "Sukienka w kwiaty Newbie Woman",
     "price": "549.99",
     "selector": "",
-    "last_updated": "2025-11-12T08:18:17.313420"
+    "last_updated": "2025-11-12T20:14:29.673709"
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "name": "Gogle VR OCULUS Meta Quest 3S 256GB",
     "price": "1799",
     "selector": "#section_offer-available > div.price-box > div.prices-section > div > div > span.whole",
-    "last_updated": "2025-11-12T08:18:17.552284"
+    "last_updated": "2025-11-12T20:14:29.853637"
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "name": "CZÃÅENKA Z PASKIEM NA NISKIM OBCASIE - SKÃRA NATURALNA - MODEL 393 LATTE",
     "price": 399.0,
     "selector": "#zakup-zwykly > div > span:nth-child(3)",
-    "last_updated": "2025-11-12T08:18:18.577617"
+    "last_updated": "2025-11-12T20:14:30.999278"
   },
   {
     "id": 4,
@@ -29,6 +29,6 @@
     "name": " Colostrobaza 5%, krem przeciwzmarszczkowy, 30 g",
     "price": "20.66",
     "selector": "",
-    "last_updated": "2025-11-12T08:18:18.763641"
+    "last_updated": "2025-11-12T20:14:31.108693"
   }
 ]
